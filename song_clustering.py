@@ -10,7 +10,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 
 cid ="38a975768416491cbf5ac70921868d46"
-secret = "54105fa53c4a437698b63f459d557c88"
+secret = ""
 username = "dylrobinson22"
 
 def getSP():
