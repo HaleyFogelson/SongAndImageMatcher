@@ -151,7 +151,7 @@ def predictUploadedPhoto(model,emotion_dict, img_path):
         maxindex = int(np.argmax(prediction))
         cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         emotions.append(emotion_dict[maxindex])
-        #print(emotion_dict[maxindex])
+        print(emotion_dict[maxindex])
     return emotions
     #cv2.imshow(cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
 
@@ -176,10 +176,11 @@ def runAlgorithm(mode,inputType, img_path=""):
 
        #upload an image
         if inputType == "upload":
-            predictUploadedPhoto(model,emotion_dict, img_path)
+            return predictUploadedPhoto(model,emotion_dict, img_path)
         else:
              # start the webcam feed
              predictLiveStream(model,emotion_dict)
+             return
 
 def labelImages():
     with open('photoEmotions.csv', 'w', newline='') as csvfile:
@@ -190,17 +191,19 @@ def labelImages():
 
         for filename in os.listdir('../photosForAI'):
             if filename.endswith(".jpg") or filename.endswith(".jpeg"):
-                #print("running algorthm for file",filename)
+                print("running algorthm for file",filename)
                 img_path = '../photosForAI/' + filename
                 result = runAlgorithm("display","upload",img_path)
+                emotions=" "
                 if result:
-                    result.insert(0, filename)
-                else:
-                    result = [filename]
-                writer.writerow(result)
-                cvsData.append(result) 
-        a = np.asarray(cvsData)
-        np.savetxt("result.csv", a, delimiter=",")         
+                    result.sort()
+                    for emotion in result:
+                        emotions = emotions + ", " + emotion
+                    print("just appended: ", emotions)
+                cvsData.append([filename,emotions])
+        df = pd.DataFrame(np.asarray(cvsData), columns=['file name','emotions']) 
+        df.to_csv('result.csv',index=False)
+        #np.savetxt("result.csv", a, delimiter=",")         
 
 def commandLineAlgorthmsMain():
     # command line argument
