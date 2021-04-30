@@ -184,9 +184,8 @@ def runAlgorithm(mode,inputType, img_path=""):
         if inputType == "upload":
             return predictUploadedPhoto(model,emotion_dict, img_path)
         else:
-             # start the webcam feed to get emotion off live webcam
-             predictLiveStream(model,emotion_dict)
-             return
+             # start the webcam feed to get emotion off live webcab
+             return predictLiveStream(model,emotion_dict)
 
 def labelImages():
     cvsData=[]
