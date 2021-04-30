@@ -1,3 +1,4 @@
+'''Reads the songs from the million song dataset and adds 9000 of them to a Spotify playlist'''
 import pandas as pd
 import sqlite3
 import spotipy
