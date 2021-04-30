@@ -151,7 +151,7 @@ def predictUploadedPhoto(model,emotion_dict, img_path):
         maxindex = int(np.argmax(prediction))
         cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
         emotions.append(emotion_dict[maxindex])
-        print(emotion_dict[maxindex])
+        # print(emotion_dict[maxindex])
     return emotions
     #cv2.imshow(cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
 
@@ -164,8 +164,8 @@ def runAlgorithm(mode,inputType, img_path=""):
     if mode == "train":
         model = train_model(model)
 
-    # emotions will be displayed on your face from the webcam feed
-    elif mode == "display":
+    # emotions will be displayed 
+    else:
         model.load_weights('model.h5')
 
         # prevents openCL usage and unnecessary logging messages
@@ -178,32 +178,27 @@ def runAlgorithm(mode,inputType, img_path=""):
         if inputType == "upload":
             return predictUploadedPhoto(model,emotion_dict, img_path)
         else:
-             # start the webcam feed
+             # start the webcam feed to get emotion off live webcam
              predictLiveStream(model,emotion_dict)
              return
 
 def labelImages():
-    with open('photoEmotions.csv', 'w', newline='') as csvfile:
-        fieldnames = ['path', 'emotions']
-        writer = csv.writer(csvfile, delimiter=' ', quotechar='|', quoting=csv.QUOTE_MINIMAL)
-        # writer.writeheader()
-        cvsData=[]
+    cvsData=[]
 
-        for filename in os.listdir('../photosForAI'):
-            if filename.endswith(".jpg") or filename.endswith(".jpeg"):
-                print("running algorthm for file",filename)
-                img_path = '../photosForAI/' + filename
-                result = runAlgorithm("display","upload",img_path)
-                emotions=" "
-                if result:
-                    result.sort()
-                    for emotion in result:
-                        emotions = emotions + ", " + emotion
-                    print("just appended: ", emotions)
-                cvsData.append([filename,emotions])
-        df = pd.DataFrame(np.asarray(cvsData), columns=['file name','emotions']) 
-        df.to_csv('result.csv',index=False)
-        #np.savetxt("result.csv", a, delimiter=",")         
+    for filename in os.listdir('../photosForAI'):
+        if filename.endswith(".jpg") or filename.endswith(".jpeg"):
+            print("running algorthm for file",filename)
+            img_path = './photosForAI/' + filename
+            result = runAlgorithm("display","upload",img_path)
+            emotions=" "
+            if result:
+                result.sort()
+                for emotion in result:
+                    emotions = emotions + emotion + ", " 
+                #print("just appended: ", emotions)
+            cvsData.append([filename,emotions])
+    df = pd.DataFrame(np.asarray(cvsData), columns=['file name','emotions']) 
+    df.to_csv('result.csv',index=False)        
 
 def commandLineAlgorthmsMain():
     # command line argument
@@ -215,11 +210,13 @@ def commandLineAlgorthmsMain():
     img_path = args['image']
     mode = args['mode']
     inputType = args['inputType']
-    runAlgorithm(mode,inputType, img_path)             
+    return (runAlgorithm(mode,inputType, img_path))
+       
 
-if __name__ == "__main__":
-    #commandLineAlgorthmsMain()
-    labelImages()
+# if __name__ == "__main__":
+#     #commandLineAlgorthmsMain()
+#     print(commandLineAlgorthmsMain())
+#     #labelImages()
     
     
 

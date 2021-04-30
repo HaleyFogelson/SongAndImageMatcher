@@ -1,20 +1,17 @@
-# SongAndImageMatcher
-Project for cs 4100 to match a song to any image uploaded to it
+# Emotion detection using deep learning
 
-## Team members
-- Haley Fogelson
-- Dylan Robinson
+## Introduction
 
-## Describe the problem you are trying to address
-- Finding a song that goes with an Image from spotify
--  We can get audio features from a song through the spotify api
-- Valence, energy, acousticness, speechiness, danceability, etc.
-- Using these audio features, we can cluster our dataset of songs
-- We will also cluster our dataset of images
-- inputs: An image
--outputs: A spotify song
+This project aims to classify the emotion on a person's face into one of **seven categories**, using deep convolutional neural networks. The model is trained on the **FER-2013** dataset which was published on International Conference on Machine Learning (ICML). This dataset consists of 35887 grayscale, 48x48 sized face images with **seven emotions** - angry, disgusted, fearful, happy, neutral, sad and surprised.
 
-# Libraries used
-- Spotify API https://spotipy.readthedocs.io/en/2.17.1/ 
-- Scikit-learn for use of algorithms https://scikit-learn.org 
+## Dependencies
 
+* Python 3, [OpenCV](https://opencv.org/), [Tensorflow](https://www.tensorflow.org/)
+* To install the required packages, run `pip install -r requirements.txt`.
+
+## How to use
+* If you want to see the facebox around emotion
+```bash
+cd src
+python emotions.py --mode display
+```
