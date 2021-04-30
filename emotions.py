@@ -107,6 +107,7 @@ def train_model(model):
 
 def predictLiveStream(model,emotion_dict):
     cap = cv2.VideoCapture(0)
+    print("Type q when you are at the emotion you want the playlist for")
     while True:
         # Find haar cascade to draw bounding box around face
         ret, frame = cap.read()
@@ -126,9 +127,14 @@ def predictLiveStream(model,emotion_dict):
 
         cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            cap.release()
+            cv2.destroyAllWindows()
+            print("Since you're facial emotion is %s you will get a %s song",prediction, prediction)
+            return prediction
             break
     cap.release()
     cv2.destroyAllWindows()
+
 
 
 def predictUploadedPhoto(model,emotion_dict, img_path):
