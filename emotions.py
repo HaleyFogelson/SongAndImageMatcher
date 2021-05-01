@@ -129,8 +129,8 @@ def predictLiveStream(model,emotion_dict):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             cap.release()
             cv2.destroyAllWindows()
-            print("Since you're facial emotion is %s you will get a %s song",prediction, prediction)
-            return prediction
+            print("Since you're facial emotion is " + emotion_dict[maxindex]+", you will get a "+ emotion_dict[maxindex]+" song")
+            return [emotion_dict[maxindex]]
             break
     cap.release()
     cv2.destroyAllWindows()

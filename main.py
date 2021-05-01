@@ -1,8 +1,6 @@
 from emotions import commandLineAlgorthmsMain
 import pandas as pd
 
-import matplotlib.pyplot as plt
-import seaborn as sns
 import numpy as np
 from sklearn.cluster import KMeans, SpectralClustering
 
@@ -127,6 +125,9 @@ def predict(new_image_df):
 
 if __name__ == "__main__":
     emotion_list = commandLineAlgorthmsMain()
+    print()
+    print('These emotions were found in the image: ')
+    print(emotion_list)
 
     emotions_dict = {'happy': [0], 'sad': [0], 'angry': [0], 'neutral': [0], 'disgusted': [0], 'surprised': [0], 'fearful': [0]}
 
