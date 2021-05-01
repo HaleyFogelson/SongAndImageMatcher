@@ -6,7 +6,7 @@ import numpy as np
 from sklearn.cluster import KMeans, SpectralClustering
 
 
-image_df = pd.read_csv('LiveEmotions/result.csv')
+image_df = pd.read_csv('result.csv')
 
 print(image_df.head())
 
