@@ -1,3 +1,4 @@
+'''Select some images from our dataset and suggest songs to go with them based on the results from clustering'''
 import pandas as pd
 import numpy as np
 
