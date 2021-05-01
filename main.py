@@ -105,7 +105,7 @@ def predict(new_image_df):
         6: 5 # also happy
     }
 
-    song_cluster = image_cluster_song_cluster_map[int(image_cluster)]
+    song_cluster = image_cluster_song_cluster_map[predicted_cluster]
 
     is_cluster = songs_df['cluster'] == song_cluster
 
@@ -126,10 +126,7 @@ def predict(new_image_df):
 
 
 if __name__ == "__main__":
-    #commandLineAlgorthmsMain()
-    print(commandLineAlgorthmsMain())
-
-    emotion_list = ['Happy', 'Happy', 'Sad']
+    emotion_list = commandLineAlgorthmsMain()
 
     emotions_dict = {'happy': [0], 'sad': [0], 'angry': [0], 'neutral': [0], 'disgusted': [0], 'surprised': [0], 'fearful': [0]}
 
